@@ -42,7 +42,7 @@ def args_parser():
         help = 'batch size when trained on TCclient'
     )
     parser.add_argument(
-        '--num_communication',
+        '--num_round',
         type = int,
         default=50,
         help = 'number of rounds'

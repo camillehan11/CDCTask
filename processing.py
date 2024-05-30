@@ -3,7 +3,7 @@ import torch
 from torch import nn
 import tensorflow as tf
 import numpy  as np
-def average_weights(w, s_num):
+def process_weights(w, s_num):
     #copy the first client's weights
     total_sample_num = sum(s_num)
     temp_sample_num = s_num[0]

@@ -77,18 +77,9 @@ class Server():
         """
         received_dict = [dict for dict in self.receiver_buffer.values()]
         sample_num = [snum for snum in self.sample_registration.values()]
-        self.shared_state_dict,self.g = average_weights(w = received_dict,
+        self.shared_state_dict,self.g = process_weights(w = received_dict,
                                                  s_num= sample_num)
-    def aggregate_prox(self, args):
-        """
-        Using the old aggregation funciton
-        :param args:
-        :return:
-        """
-        received_dict = [dict for dict in self.receiver_buffer.values()]
-        sample_num = [snum for snum in self.sample_registration.values()]
-        self.shared_state_dict,self.g = average_weights(args, w = received_dict,
-                                                 s_num= sample_num)
+   
     def send_to_TCclient(self, TCclient):
         TCclient.receive_from_TGserver(copy.deepcopy(self.shared_state_dict))
         # self.Z = np.size(self.shared_state_dict)*16/1024/1024

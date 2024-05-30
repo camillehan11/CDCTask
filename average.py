@@ -17,19 +17,8 @@ def average_weights(w, s_num):
     a = 0
     # num = np.array(w.cpu())
     for k in w_avg.keys():  #the nn layer loop
-
         for i in range(1, len(w)):   #the client loop
             w_avg[k] += torch.mul(w[i][k], (s_num[i]/(temp_sample_num))).long()
-            # wt[a]
-            # w1 =np.array(w[0]['linear.weight'].cpu())
-            # w2 = np.array(w[0]['linear.bias'].cpu())
-            # wt  = np.vstack(np.array(w[0]['linear.weight'].cpu()), np.array(w[0]['linear.bias'].cpu()))
-
-            # wt = np.vstack((np.array(w[i][0].cpu()), np.array(w[i][1].cpu())))
-            # d[a] = np.array(wt.cpu())
-            # gl[a] = np.linalg.norm(d[a], axis=1)
-
-            # a = np.array(torch.norm(w[i][k],p=2).cpu()).reshape(1)
     for k in w_avg.keys():  # the nn layer loop
         for j in range(len(w)):
             # d = np.array(w[j][k].cpu())

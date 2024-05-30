@@ -48,13 +48,13 @@ def args_parser():
         help = 'number of rounds'
     )
     parser.add_argument(
-        '--num_local_update',
+        '--num_TCclient_update',
         type=int,
         default=5,
         help='number of TCclient updates'
     )
     parser.add_argument(
-        '--num_TGserver_aggregation',
+        '--num_TGserver_update',
         type = int,
         default=2,
         help = 'number of TGserver updates'

@@ -175,15 +175,15 @@ def CDCtask(args):
     batch_size = 20
     Ns = args.num_communication * args.num_TGserver_aggregation
 
-    FILEOUT = f"{args.dataset}_TCclients{args.num_TCclients}_TGservers{args.num_TGservers}_" \
-              f"batch-{batch}" \
-              f"t1-{args.num_local_update}_t2-{args.num_TGserver_aggregation}" \
-              f"epoch{args.num_communication}" \
-              f"max_p{max_p}" \
-              f"mu{args.mu}" \
-              f"TD3"
+    # FILEOUT = f"{args.dataset}_TCclients{args.num_TCclients}_TGservers{args.num_TGservers}_" \
+    #           f"batch-{batch}" \
+    #           f"t1-{args.num_local_update}_t2-{args.num_TGserver_aggregation}" \
+    #           f"epoch{args.num_communication}" \
+    #           f"max_p{max_p}" \
+    #           f"mu{args.mu}" \
+    #           f"TD3"
 
-    writer = SummaryWriter(comment=FILEOUT)
+    # writer = SummaryWriter(comment=FILEOUT)
     train_loaders, test_loaders, v_train_loader, v_test_loader = get_dataloaders(args, batch)
     for i in range(args.num_TCclients):
         TCclients[i] = TCclient(id=i, train_loader=train_loaders[i], test_loader=test_loaders[i], args=args, batch_size=batch, device=device)
@@ -195,7 +195,7 @@ def CDCtask(args):
     action_num = env.power_num
 
     for n in range(args.num_TGservers):
-        Agents_list.append(TD3_agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=batch_size))
+        Agents_list.append(agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=batch_size))
         reward_lists_of_list.append([])
         mean_reward_lists_of_list.append([])
         critic_loss_list.append([])
@@ -317,11 +317,11 @@ def CDCtask(args):
         mean_delay = edelay / args.num_TGservers
         mean_gradient = egradient / args.num_TGservers
         mean_reward = ereward / args.num_TGservers
-        writer.add_scalar('delay', mean_delay, num_comm + 1)
-        writer.add_scalar('gradient divergence', mean_gradient , num_comm + 1)
-        writer.add_scalar('Mean_reward', mean_reward * mean_acc, num_comm + 1)
+        # writer.add_scalar('delay', mean_delay, num_comm + 1)
+        # writer.add_scalar('gradient divergence', mean_gradient , num_comm + 1)
+        # writer.add_scalar('Mean_reward', mean_reward * mean_acc, num_comm + 1)
 
-    writer.close()
+    # writer.close()
 
 def main():
     args = args_parser()

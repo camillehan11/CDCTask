@@ -173,11 +173,11 @@ def CDCtask(args):
     target_list = []
     critic_list = []
     batch_size = 20
-    Ns = args.num_communication * args.num_TGserver_aggregation
+    Ns = args.num_communication * args.num_TGserver_update
 
     # FILEOUT = f"{args.dataset}_TCclients{args.num_TCclients}_TGservers{args.num_TGservers}_" \
     #           f"batch-{batch}" \
-    #           f"t1-{args.num_local_update}_t2-{args.num_TGserver_aggregation}" \
+    #           f"t1-{args.num_TCclient_update}_t2-{args.num_TGserver_update}" \
     #           f"epoch{args.num_communication}" \
     #           f"max_p{max_p}" \
     #           f"mu{args.mu}" \
@@ -215,7 +215,7 @@ def CDCtask(args):
         s_actor, _, g, loss, rate, reliability, delay1, delay2 = env.reset(device, R)
         delay = delay1 * 1e-2
 
-        for num_TGserveragg in range(args.num_TGserver_aggregation):
+        for num_TGserveragg in range(args.num_TGserver_update):
             TGserver_sample = [0] * args.num_TGservers
             correct_all = 0.0
             total_all = 0.0

@@ -18,7 +18,7 @@ Environment, server and client settings:
 
 `Environment.py`: the mutilcell cellular wireless Environment simulator.
 
-`main.py`: run this main file to simulate the methods for CDC resource mangement and concurrent task orchestration.
+`main_1.py`: run this main file to simulate the methods for CDC resource mangement and concurrent task orchestration.
 
 `TG_server.py`: the TG server simulator.
 

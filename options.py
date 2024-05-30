@@ -8,39 +8,25 @@ def args_parser():
         '--dataset',
         type = str,
         default = 'mnist',
-        help = 'name of the dataset: mnist, cifar10,FMNIST,svhn'
+        help = 'name of the dataset: mnist, cifar10'
     )
     parser.add_argument(
         '--model',
         type = str,
         default = 'mnistlenet',
-        help='name of model. mnist: logistic, mnistlenet; cifar10: cnn_tutorial, cnn_complex,SimpleDLA,lenet'
+        help='name of model. mnist: logistic, mnistlenet; cifar10: lenet'
     )
     parser.add_argument(
         '--mu',
         type=float,
         default=0.8
-        # help='number of communication rounds with the cloud server'
     )
-    parser.add_argument(
-        '--fed',
-        type=str,
-        default='fedavg'
-        # help='number of communication rounds with the cloud server'
-    )
-
 
     parser.add_argument(
         '--input_channels',
         type = int,
         default = 3,
         help = 'input channels. mnist:1, cifar10 :3'
-    )
-    parser.add_argument(
-        '--Lagrange',
-        type = float,
-        default = 1,
-        help = 'Lagrange'
     )
     parser.add_argument(
         '--output_channels',
@@ -59,19 +45,19 @@ def args_parser():
         '--num_communication',
         type = int,
         default=50,
-        help = 'number of communication rounds with the cloud server'
+        help = 'number of rounds'
     )
     parser.add_argument(
         '--num_local_update',
         type=int,
         default=5,
-        help='number of local update (tau_1)'
+        help='number of TCclient updates'
     )
     parser.add_argument(
         '--num_TGserver_aggregation',
         type = int,
         default=2,
-        help = 'number of TGserver aggregation (tau_2)'
+        help = 'number of TGserver updates'
     )
     parser.add_argument(
         '--lr',
@@ -79,16 +65,6 @@ def args_parser():
         default = 0.01,
         help = 'learning rate of the SGD when trained on TCclient'
     )
-
-
-    parser.add_argument(
-        '--alpha',
-        type = float,
-        default = 0.8,
-        # help = 'learning rate of the SGD when trained on TCclient'
-    )
-
-
     parser.add_argument(
         '--lr_decay',
         type = float,
@@ -123,14 +99,13 @@ def args_parser():
     parser.add_argument(
         '--iid',
         type = int,
-        default = 1,
-        help = 'distribution of the data, 1,0, -2(one-class)'
+        default = 1'
     )
     parser.add_argument(
         '--TGserveriid',
         type=int,
         default=1,
-        help='distribution of the data under TGservers, 1 (TGserveriid),0 (TGserverniid) (used only when iid = -2)'
+        help='distribution of the data under TGservers'
     )
     parser.add_argument(
         '--frac',
@@ -142,7 +117,7 @@ def args_parser():
         '--num_TCclients',
         type = int,
         default = 100,
-        help = 'number of all available TCclients'
+        help = 'number of TCclients'
     )
     parser.add_argument(
         '--num_TGservers',
@@ -154,7 +129,7 @@ def args_parser():
         '--nclass',
         type = int,
         default= 2,
-        help= 'number of TGservers'
+        help= 'number of data classes distributed on TGservers'
     )
     parser.add_argument(
         '--nsamples',
@@ -163,21 +138,10 @@ def args_parser():
         help= 'number of TGservers'
     )
     parser.add_argument(
-        '--rate_unbalance',
-        type = int,
-        default= 1.0,
-        help= 'number of TGservers'
-    )
-    # num_users_cifar = 400
-    # nclass_cifar = 2
-    # nsamples_cifar = 20
-    # rate_unbalance_cifar = 1.0
-
-    parser.add_argument(
         '--seed',
         type = int,
         default = 11,
-        help = 'random seed (defaul: 1)'
+        help = 'random seed'
     )
     parser.add_argument(
         '--dataset_root',
@@ -189,13 +153,13 @@ def args_parser():
         '--show_dis',
         type= int,
         default= 1,
-        help='whether to show distribution'
+        help='whether to show data distribution'
     )
     parser.add_argument(
         '--classes_per_TCclient',
         type=int,
         default = 10,
-        help='under artificial non-iid distribution, the classes per TCclient'
+        help='non-iid data distribution, the classes per TCclient'
     )
     parser.add_argument(
         '--gpu',

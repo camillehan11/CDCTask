@@ -1,13 +1,10 @@
-# CDC Resource Management and Concurrent Task Orchestration 
-Communication-Dependent Computing Resource Management for Concurrent Task Orchestration in IoT Systems
+# Communication-Dependent Computing Resource Management for Concurrent Task Orchestration in IoT Systems
 
 This repository contains the codes for our work "Communication-Dependent Computing Resource Management for Concurrent Task Orchestration in IoT Systems".
 
  
-
-
 # Requirements
-The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116 But newer versions should also be fine.
+The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. But newer versions should also be fine.
 
 
 

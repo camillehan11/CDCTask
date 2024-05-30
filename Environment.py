@@ -3,20 +3,6 @@ import numpy as np
 dtype = np.float32
 from scipy import special
 
-
-fd = 10
-Ts = 20e-3
-n_x = 2
-n_y = 2
-L = 2
-C = 16
-maxM = 25   # user number in one BS
-min_dis = 0.01 #km
-max_dis = 1. #km
-max_p = 38. #dBm
-p_n = -114. #dBm
-power_num = 10
-
 class Env():
     def __init__(self, fd, Ts, n_x, n_y, L, C, maxM, min_dis, max_dis, max_p, p_n, power_num,args, TCclients, device):
         self.fd = fd

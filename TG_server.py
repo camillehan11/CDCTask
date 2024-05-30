@@ -7,7 +7,7 @@
 # 5. Server receives the aggregated information from the cloud server
 
 import copy
-from average import average_weights
+from process import process_weights
 
 from scipy import integrate
 from sympy import *

@@ -1,18 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 18 12:37:59 2021
-
-@author: peymantehrani
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 12 13:52:02 2021
-
-@author: peymantehrani
-"""       
 import os
 import numpy as np
 import torch as T

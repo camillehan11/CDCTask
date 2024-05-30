@@ -9,7 +9,6 @@ from torch.utils.data import DataLoader, Dataset
 from options import args_parser
 
 class DatasetSplit(Dataset):
-
     def __init__(self, dataset, idxs):
         super(DatasetSplit, self).__init__()
         self.dataset = dataset

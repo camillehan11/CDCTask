@@ -28,7 +28,7 @@ class Env():
         self.sigma2 = 1e-3*pow(10., self.p_n/10.)
         self.maxP = 1e-3*pow(10., self.max_p/10.)
         self.p_array, self.p_list = self.generate_environment()
-        self.num_local_update = args.num_local_update
+        self.num_TCclient_update = args.num_TCclient_update
         self.TCclients = TCclients
         self.batch_size= args.batch_size
 
@@ -172,7 +172,7 @@ class Env():
         g = [0.0] * self.M
         delay_c  = [0.0] * self.M
         for i,TCclient in enumerate(self.TCclients):
-            local_loss[i], g[i] = self.TCclients[i].local_update(num_iter=self.num_local_update,
+            local_loss[i], g[i] = self.TCclients[i].local_update(num_iter=self.num_TCclient_update,
                                                       device=device)
             delay_c[i] = R / ((self.TCclients[i].f)) / self.TCclients[i].c
         g = np.array(g)

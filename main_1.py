@@ -22,7 +22,7 @@ def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
 def get_TCclient_class(args, TCclients):
-    """Classify TC clients based on their data distribution."""
+    """Classify TC clients' data distribution."""
     TCclient_class = []
     TCclient_class_dis = [[] for _ in range(10)]
     for TCclient in TCclients:
@@ -35,7 +35,7 @@ def get_TCclient_class(args, TCclients):
     return TCclient_class_dis
 
 def get_TGserver_class(args, TGservers, TCclients):
-    """Classify TG servers based on the data distribution of their assigned clients."""
+    """Classify TG servers' data distribution."""
     TGserver_class = [[] for _ in range(len(TGservers))]
     for i, TGserver in enumerate(TGservers):
         for cid in TGserver.cids:
@@ -47,7 +47,7 @@ def get_TGserver_class(args, TGservers, TCclients):
     print(f'Class distribution among TG servers: {TGserver_class}')
 
 def initialize_TGservers_iid(num_TGservers, TCclients, args, TCclient_class_dis):
-    """Initialize TG servers with IID data distribution among clients."""
+    """Initialize TG servers with IID data distribution."""
     TGservers = []
     p_TCclients = [0.0] * num_TGservers
     for eid in range(num_TGservers):
@@ -83,7 +83,7 @@ def initialize_TGservers_iid(num_TGservers, TCclients, args, TCclient_class_dis)
     return TGservers, p_TCclients
 
 def all_TCclients_test(server, TCclients, cids, device):
-    """Test all TC clients."""
+    """Test on TC clients."""
     [server.send_to_TCclient(TCclients[cid]) for cid in cids]
     for cid in cids:
         server.send_to_TCclient(TCclients[cid])
@@ -97,7 +97,7 @@ def all_TCclients_test(server, TCclients, cids, device):
     return correct_TGserver, total_TGserver
 
 def fast_all_TCclients_test(v_test_loader, global_nn, device):
-    """Quickly test all TC clients."""
+    """Quickly test on TC clients."""
     correct_all = 0.0
     total_all = 0.0
     with torch.no_grad():
@@ -112,7 +112,7 @@ def fast_all_TCclients_test(v_test_loader, global_nn, device):
     return correct_all, total_all
 
 def initialize_global_nn(args):
-    """Initialize the global neural network based on dataset and model type."""
+    """Initialize the neural network for global learning task based on dataset and model type."""
     if args.dataset == 'mnist':
         if args.model == 'logistic':
             global_nn = LogisticRegression(input_dim=1, output_dim=10)
@@ -152,7 +152,7 @@ def CDCtask(args):
     n_y = 5
     L = 2
     C = 16
-    maxM = 20  # user number in one BS
+    maxM = 20  # user number
     min_dis = 0.01  # km
     max_dis = 1.0  # km
     max_p = 38 # dBm

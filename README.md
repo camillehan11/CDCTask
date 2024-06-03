@@ -25,7 +25,9 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 `TC_client.py`: the TC client simulator.
 
 ### Data Processing
+
 `datasets/cifar_mnist.py`: get the mnist and cifar10 datasets, then some split operations on them to distribute on TC clients and TG servers.
+`NNmodels`: `NNmodels`: distributed machine learning models for local training on clients.
 
 
 ### Algorithms

@@ -4,7 +4,7 @@ dtype = np.float32
 from scipy import special
 
 class Env():
-    def __init__(self, fd, Ts, n_x, n_y, L, C, maxM, min_dis, max_dis, max_p, p_n, power_num,args, TCclients, device):
+    def __init__(self, fd, Ts, n_x, n_y, L, C, maxM, min_dis, max_dis, max_p, max_b, p_n, power_num,args, TCclients, device):
         self.fd = fd
         self.Ts = Ts
         self.n_x = n_x
@@ -15,6 +15,7 @@ class Env():
         self.min_dis = min_dis #km
         self.max_dis = max_dis #km
         self.max_p = max_p #dBm
+        self.max_b = max_b  # dBm
         self.p_n = p_n     #dBm
         self.power_num = power_num
         self.TCclients = TCclients
@@ -30,7 +31,7 @@ class Env():
         self.p_array, self.p_list = self.generate_environment()
         self.num_TCclient_update = args.num_TCclient_update
         self.TCclients = TCclients
-        self.batch_size= args.batch_size
+        self.batch_size= max_b
 
     def get_power_set(self, min_p):
         power_set = np.hstack([np.zeros((1), dtype=dtype), 1e-3*pow(10.,
@@ -229,12 +230,12 @@ class Env():
 
         return s_actor, s_critic,g, loss, rate, reliability,delay1,delay2
 
-    def step(self, P,device,R):
+    def step(self, P, batch_size, device,R):
         H2,p_matrix, rate_matrix, rate , sum_rate ,reward_rate, delay_u, reliability = self.calculate_rate(P,R)
         g,loss,delay_c= self.calculate_gradient(device,R)
         self.count = self.count + 1
         H2_next = self.H2_set[:,:,self.count]
-        batch_size = self.batch_size
+        # batch_size = self.batch_size
         delay = delay_c + delay_u
         s_actor_next, s_critic_next = self.generate_next_state(R,H2_next, p_matrix, g, batch_size, rate_matrix,reliability,delay)
         reliability = np.clip(reliability, 1e-3, 1 - 1e-3)

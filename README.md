@@ -12,7 +12,7 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 ## The introduction of each file
 
 
-Environment, server, and client settings:
+### Environment, server, and client settings:
 
 `Environment.py`: the multicell cellular wireless environment simulator.
 
@@ -22,11 +22,11 @@ Environment, server, and client settings:
 
 `TC_client.py`: the TC client simulator.
 
-
+### Configurations
 `options.py`: The whole configuration of this project, and the parameters can be changed for better performance.
 
 
-MARL algorithms
+### MARL algorithms
 
 `TD3.py`: Twin Delayed DDPG (TD3).
 

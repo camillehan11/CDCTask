@@ -11,8 +11,10 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 
 ## The introduction of each file
 
+### Configurations
+`options.py`: The whole configuration of this project, and the parameters can be changed for better performance.
 
-### Environment, server, and client settings:
+### Environment, server, and client settings
 
 `Environment.py`: the multicell cellular wireless environment simulator.
 
@@ -22,11 +24,11 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 
 `TC_client.py`: the TC client simulator.
 
-### Configurations
-`options.py`: The whole configuration of this project, and the parameters can be changed for better performance.
+### Data Processing
+datasets/cifar_mnist: get the mnist and cifar10 datasets, then some split operations on them to distribute on TC clients and TG servers.
 
 
-### MARL algorithms
+### Algorithms
 
 `TD3.py`: Twin Delayed DDPG (TD3).
 

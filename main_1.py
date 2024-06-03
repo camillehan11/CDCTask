@@ -12,7 +12,7 @@ from options import args_parser
 from TC_client import TCclient
 from TG_server import Server
 from datasets.get_data import get_dataloaders, show_distribution
-from NNmodels.cifar_lenet import lenet
+from NNmodels.cifar_lenet import LeNet
 from NNmodels.mnist_logistic import LogisticRegression
 from NNmodels.mnist_lenet import mnistlenet
 from Environment import Env

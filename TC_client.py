@@ -9,11 +9,9 @@ from torch.autograd import Variable
 import torch
 from NNmodels.initialize_model import initialize_model
 import copy
-
 import numpy as np
 import math
 class TCclient():
-
     def __init__(self, id, train_loader, test_loader, args, batch_size, device):
         self.id = id
         self.num_TCclient_update=args.num_TCclient_update
@@ -25,7 +23,6 @@ class TCclient():
         self.epoch = 0
         self.clock = []
         self.cc =  np.array([np.random.uniform(0, 0.5)+ 0.0025*self.id*args.num_round, (1-np.random.uniform(0, 0.5))- 0.0025*self.id*args.num_round])
-
         self.c = np.random.uniform(1, 10)
         self.f = np.random.uniform(0.5e+9, 1e+9)
 

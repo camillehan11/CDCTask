@@ -1,11 +1,11 @@
-from NNmodels.cifar_cnn_3conv_layer import cifar_cnn_3conv, cifar_cnn_3conv_specific, cifar_cnn_3conv_shared
-from NNmodels.cifar_lenet import lenet
-from NNmodels.cifar_wideNet import WideResNet
-from NNmodels.mnist_cnn import CNN
-from NNmodels.mnist_logistic import LogisticRegression
+# from NNmodels.cifar_cnn_3conv_layer import cifar_cnn_3conv, cifar_cnn_3conv_specific, cifar_cnn_3conv_shared
+from NNmodels.cifar_lenet import LeNet
+# from NNmodels.cifar_wideNet import WideResNet
+# from NNmodels.mnist_cnn import CNN
+# from NNmodels.mnist_logistic import LogisticRegression
 from NNmodels.mnist_lenet import mnistlenet,lenet
 import torch.optim as optim
-from NNmodels.CNNCifar import CNNCifar
+# from NNmodels.CNNCifar import CNNCifar
 import torch.nn as nn
 from copy import deepcopy
 from options import args_parser

@@ -158,7 +158,8 @@ def CDCtask(args):
     maxM = 20  # user number in one BS
     min_dis = 0.01  # km
     max_dis = 1.0  # km
-    max_p = 38  # dBm
+    max_p = 38 # dBm
+    max_b=512
     p_n = -114.0  # dBm
     power_num = maxM  # action_num
 
@@ -175,27 +176,18 @@ def CDCtask(args):
     batch_size = 20
     Ns = args.num_round * args.num_TGserver_update
 
-    # FILEOUT = f"{args.dataset}_TCclients{args.num_TCclients}_TGservers{args.num_TGservers}_" \
-    #           f"batch-{batch}" \
-    #           f"t1-{args.num_TCclient_update}_t2-{args.num_TGserver_update}" \
-    #           f"epoch{args.num_round}" \
-    #           f"max_p{max_p}" \
-    #           f"mu{args.mu}" \
-    #           f"TD3"
-
-    # writer = SummaryWriter(comment=FILEOUT)
     train_loaders, test_loaders, v_train_loader, v_test_loader = get_dataloaders(args, batch)
     for i in range(args.num_TCclients):
         TCclients[i] = TCclient(id=i, train_loader=train_loaders[i], test_loader=test_loaders[i], args=args, batch_size=batch, device=device)
 
-    env = Env(fd, Ts, n_x, n_y, L, C, maxM, min_dis, max_dis, max_p, p_n, power_num, args, TCclients, device)
+    env = Env(fd, Ts, n_x, n_y, L, C, maxM, min_dis, max_dis, max_p,  max_b, p_n, power_num, args, TCclients, device)
     env.set_Ns(Ns)
 
     state_num = env.state_num
     action_num = env.power_num
 
     for n in range(args.num_TGservers):
-        Agents_list.append(agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=batch_size))
+        Agents_list.append(Agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=batch_size))
         reward_lists_of_list.append([])
         mean_reward_lists_of_list.append([])
         critic_loss_list.append([])
@@ -209,6 +201,7 @@ def CDCtask(args):
         avg_acc = np.zeros(args.num_TGservers)
         a = np.ones(args.num_TCclients).astype(np.int64)
         p = np.ones(args.num_TCclients)
+        b = np.ones(args.num_TCclients)
         reward_hist = np.zeros((args.num_TCclients, args.num_TGservers))
         R = batch * 28 * 28
         s_actor, _, g, loss, rate, reliability, delay1, delay2 = env.reset(device, R)
@@ -243,16 +236,18 @@ def CDCtask(args):
                         s_actor_t[j] = -1
                     rewardlist[j, i] = args.mu * (rd - tdelay[j]) / 5e2 + (1 - args.mu) * (o[j] / 30)
                 agent = Agents_list[i]
-                st = time.time()
+                # st = time.time()
                 a_agent = agent.choose_action(s_actor_agent, i + 1)
                 a_agent_1 = np.argsort(np.sum(-a_agent, axis=1))
                 a_agent_2 = a_agent_1[:10]
-                execution_time_cost += time.time() - st
-                rewardlist[:, i] -= args.mu / 1e2 * execution_time_cost
+                # execution_time_cost += time.time() - st
+                # rewardlist[:, i] -= args.mu / 1e2 * execution_time_cost
                 selected_cids[i] = (a_agent_2 + i * maxM).tolist()
                 cids[i] = a_agent_2
+                p = np.squeeze(a * (max_p / 2)) + (max_p / 2)
+                b = np.squeeze(a * (max_b / 2)) + (max_b / 2)
                 s_actor_t[a[i * maxM:(i + 1) * maxM]] = -1
-            s_actor_next, s_critic_next, reward_rate, sum_rate, rate, reliability, delay1, delay2, g, loss = env.step(p, device, R)
+            s_actor_next, s_critic_next, reward_rate, sum_rate, rate, reliability, delay1, delay2, g, loss = env.step(p, b, device, R)
             delay = delay1 * 1e-2
 
             for i in range(args.num_TGservers):
@@ -306,15 +301,7 @@ def CDCtask(args):
                 edelay += TGserver.edelay
                 egradient += (3e2*acc/TGserver.g)
 
-        # mean_acc = np.mean(acc)
-        # mean_delay = edelay / args.num_TGservers
-        # mean_gradient = egradient / args.num_TGservers
-        # mean_reward = ereward / args.num_TGservers
-        # writer.add_scalar('delay', mean_delay, num_comm + 1)
-        # writer.add_scalar('gradient divergence', mean_gradient , num_comm + 1)
-        # writer.add_scalar('Mean_reward', mean_reward * mean_acc, num_comm + 1)
 
-    # writer.close()
 
 def main():
     args = args_parser()

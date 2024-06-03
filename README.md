@@ -8,8 +8,10 @@ This repository contains the codes for our work "Communication-Dependent Computi
 The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. But newer versions should also be fine.
 
 
-
 ## The introduction of each file
+
+`main_1.py`: run this main file to simulate the methods for CDC resource management and concurrent task orchestration.
+
 
 ### Configurations
 `options.py`: The whole configuration of this project, and the parameters can be changed for better performance.
@@ -17,8 +19,6 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 ### Environment, server, and client settings
 
 `Environment.py`: the multicell cellular wireless environment simulator.
-
-`main_1.py`: run this main file to simulate the methods for CDC resource management and concurrent task orchestration.
 
 `TG_server.py`: the TG server simulator.
 

@@ -9,7 +9,6 @@ def process_weights(w, s_num):
     temp_sample_num = s_num[0]
     w_avg = copy.deepcopy(w[0])
     g = np.zeros((len(w_avg.keys()),len(w)))
-
     a = 0
     for k in w_avg.keys():  #the nn layer loop
         for i in range(1, len(w)):   #the client loop

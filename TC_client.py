@@ -16,7 +16,7 @@ class TCclient():
 
     def __init__(self, id, train_loader, test_loader, args, batch_size, device):
         self.id = id
-        self.num_local_update=args.num_local_update
+        self.num_TCclient_update=args.num_TCclient_update
         self.train_loader = train_loader
         self.test_loader = test_loader
         self.model = initialize_model(args, device)
@@ -24,7 +24,7 @@ class TCclient():
         #record local update epoch
         self.epoch = 0
         self.clock = []
-        self.cc =  np.array([np.random.uniform(0, 0.5)+ 0.0025*self.id*args.num_communication, (1-np.random.uniform(0, 0.5))- 0.0025*self.id*args.num_communication])
+        self.cc =  np.array([np.random.uniform(0, 0.5)+ 0.0025*self.id*args.num_round, (1-np.random.uniform(0, 0.5))- 0.0025*self.id*args.num_round])
 
         self.c = np.random.uniform(1, 10)
         self.f = np.random.uniform(0.5e+9, 1e+9)
@@ -34,7 +34,7 @@ class TCclient():
         loss = 0.0
         g=0.0
         end = False
-        for epoch in range(self.num_local_update):
+        for epoch in range(self.num_TCclient_update):
             for data in self.train_loader:
                 inputs, labels = data
                 inputs = Variable(inputs).to(device)
@@ -61,7 +61,7 @@ class TCclient():
         itered_num = 0
         loss = 0.0
         end = False
-        for epoch in range(self.num_local_update):
+        for epoch in range(self.num_TCclient_update):
             for data in self.train_loader:
                 inputs, labels = data
                 inputs = Variable(inputs).to(device)

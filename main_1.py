@@ -236,12 +236,9 @@ def CDCtask(args):
                         s_actor_t[j] = -1
                     rewardlist[j, i] = args.mu * (rd - tdelay[j]) / 5e2 + (1 - args.mu) * (o[j] / 30)
                 agent = Agents_list[i]
-                # st = time.time()
                 a_agent = agent.choose_action(s_actor_agent, i + 1)
                 a_agent_1 = np.argsort(np.sum(-a_agent, axis=1))
                 a_agent_2 = a_agent_1[:10]
-                # execution_time_cost += time.time() - st
-                # rewardlist[:, i] -= args.mu / 1e2 * execution_time_cost
                 selected_cids[i] = (a_agent_2 + i * maxM).tolist()
                 cids[i] = a_agent_2
                 p = np.squeeze(a_agent * (max_p / 2)) + (max_p / 2)

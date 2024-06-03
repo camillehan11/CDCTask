@@ -22,10 +22,10 @@ Environment, server, and client settings:
 
 `TC_client.py`: the TC client simulator.
 
-The wireless environment simulator and dataset were taken from the repositories:
-https://github.com/PeymanTehrani/FDRL-PC-Dyspan
+#The wireless environment simulator and dataset were taken from the repositories:
+#https://github.com/PeymanTehrani/FDRL-PC-Dyspan
 
-https://github.com/LuminLiu/HierFL
+#https://github.com/LuminLiu/HierFL
 
 
 MARL algorithms

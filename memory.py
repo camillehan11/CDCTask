@@ -14,10 +14,6 @@ Experience = namedtuple('Experience', 'state0, action, reward, state1, terminal1
 
 def sample_batch_indexes(low, high, size):
     if high - low >= size:
-        # We have enough data. Draw without replacement, that is each index is unique in the
-        # batch. We cannot use `np.random.choice` here because it is horribly inefficient as
-        # the memory grows. See https://github.com/numpy/numpy/issues/2764 for a discussion.
-        # `random.sample` does the same thing (drawing without replacement) and is way faster.
         try:
             r = xrange(low, high)
         except NameError:

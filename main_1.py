@@ -7,7 +7,6 @@ import copy
 import numpy as np
 import time
 from tqdm import tqdm
-from tensorboardX import SummaryWriter
 from options import args_parser
 from TC_client import TCclient
 from TG_server import Server
@@ -16,8 +15,6 @@ from NNmodels.cifar_lenet import LeNet
 from NNmodels.mnist_logistic import LogisticRegression
 from NNmodels.mnist_lenet import mnistlenet
 from Environment import Env
-from TD3 import TD3_agent
-
 # Initialize seed for reproducibility
 random.seed(10)
 

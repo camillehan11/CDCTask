@@ -99,7 +99,7 @@ def args_parser():
     parser.add_argument(
         '--iid',
         type = int,
-        default = 1'
+        default = '1'
     )
     parser.add_argument(
         '--TGserveriid',

@@ -33,8 +33,4 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 
 ### Algorithms
 
-`TD3.py`: Twin Delayed DDPG (TD3).
-
-`DDPG.py`: Deep Deterministic Plocy gradient (DDPG).
-
-More state-of-the-art MARL and baseline algorithms will be added.
+`TD3.py`, `DDPG.py`, and more state-of-the-art MARL algorithms will be added.

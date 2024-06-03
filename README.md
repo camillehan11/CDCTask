@@ -23,6 +23,7 @@ Environment, server, and client settings:
 `TC_client.py`: the TC client simulator.
 
 
+`options.py`: The whole configuration of this project, and the parameters can be changed for better performance.
 
 
 MARL algorithms

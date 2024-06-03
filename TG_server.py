@@ -41,7 +41,7 @@ class Server():
         self.shared_state_dict = shared_layers.state_dict()
         self.clock = []
         self.g = []
-        self.ec = np.array([np.random.uniform(0, 0.5)+ 0.0025*self.id*args.num_communication, (1-np.random.uniform(0, 0.5))- 0.0025*self.id*args.num_communication])
+        self.ec = np.array([np.random.uniform(0, 0.5)+ 0.0025*self.id*args.num_round, (1-np.random.uniform(0, 0.5))- 0.0025*self.id*args.num_round])
         self.gain =46
         self.d = np.random.uniform(0, 5)
         self.noise_power = -96

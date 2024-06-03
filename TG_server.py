@@ -69,11 +69,6 @@ class Server():
         return None
 
     def aggregate(self, args):
-        """
-        Using the old aggregation funciton
-        :param args:
-        :return:
-        """
         received_dict = [dict for dict in self.receiver_buffer.values()]
         sample_num = [snum for snum in self.sample_registration.values()]
         self.shared_state_dict,self.g = process_weights(w = received_dict,

@@ -14,7 +14,7 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 
 
 ### Configurations
-`options.py`: The whole configuration of this project, and the parameters can be changed for better performance.
+`options.py`: the configuration file of this work, and the parameters can be adjusted for testing other cases.
 
 ### Environment, server, and client settings
 

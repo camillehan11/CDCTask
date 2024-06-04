@@ -96,7 +96,7 @@ def all_TCclients_test(server, TCclients, cids, device):
         total_TGserver += total
     return correct_TGserver, total_TGserver
 
-def fast_all_TCclients_test(v_test_loader, global_nn, device):
+def fast_all_TCclients_test(v_test_loader, aggregated_nn, device):
     """Quickly test on TC clients."""
     correct_all = 0.0
     total_all = 0.0
@@ -105,29 +105,29 @@ def fast_all_TCclients_test(v_test_loader, global_nn, device):
             inputs, labels = data
             inputs = inputs.to(device)
             labels = labels.to(device)
-            outputs = global_nn(inputs)
+            outputs = aggregated_nn(inputs)
             _, predicts = torch.max(outputs, 1)
             total_all += labels.size(0)
             correct_all += (predicts == labels).sum().item()
     return correct_all, total_all
 
-def initialize_global_nn(args):
-    """Initialize the neural network for global learning task based on dataset and model type."""
+def initialize_aggregated_nn(args):
+    """Initialize the neural network based on dataset and model type."""
     if args.dataset == 'mnist':
         if args.model == 'logistic':
-            global_nn = LogisticRegression(input_dim=1, output_dim=10)
+            aggregated_nn = LogisticRegression(input_dim=1, output_dim=10)
         elif args.model == 'mnistlenet':
-            global_nn = mnistlenet(args)
+            aggregated_nn = mnistlenet(args)
         else:
             raise ValueError(f"Model {args.model} not implemented for MNIST")
     elif args.dataset == 'cifar10':
         if args.model == 'lenet':
-            global_nn = lenet(args)
+            aggregated_nn = lenet(args)
         else:
             raise ValueError(f"Model {args.model} not implemented for CIFAR-10")
     else:
         raise ValueError(f"Dataset {args.dataset} not implemented")
-    return global_nn
+    return aggregated_nn
 
 def CDCtask(args):
     """Execute the CDC task based on the provided arguments."""
@@ -139,9 +139,9 @@ def CDCtask(args):
     device = cuda_to_use if torch.cuda.is_available() else "cpu"
     print(f'Using device {device}')
 
-    global_nn = initialize_global_nn(args)
+    aggregated_nn = initialize_aggregated_nn(args)
     if args.cuda:
-        global_nn = global_nn.cuda(device)
+        aggregated_nn = aggregated_nn.cuda(device)
 
     TGservers = [[] for _ in range(args.num_TGservers)]
     TCclients = [[] for _ in range(args.num_TCclients)]

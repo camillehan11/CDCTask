@@ -145,7 +145,7 @@ def CDCtask(args):
 
     TGservers = [[] for _ in range(args.num_TGservers)]
     TCclients = [[] for _ in range(args.num_TCclients)]
-    batch = 50
+    bat = 50
     fd = 10
     Ts = 20e-3
     n_x = 1
@@ -170,12 +170,12 @@ def CDCtask(args):
     actor_loss_list = []
     target_list = []
     critic_list = []
-    batch_size = 20
+     
     Ns = args.num_round * args.num_TGserver_update
 
-    train_loaders, test_loaders, v_train_loader, v_test_loader = get_dataloaders(args, batch)
+    train_loaders, test_loaders, v_train_loader, v_test_loader = get_dataloaders(args, bat)
     for i in range(args.num_TCclients):
-        TCclients[i] = TCclient(id=i, train_loader=train_loaders[i], test_loader=test_loaders[i], args=args, batch_size=batch, device=device)
+        TCclients[i] = TCclient(id=i, train_loader=train_loaders[i], test_loader=test_loaders[i], args=args, batch_size=bat, device=device)
 
     env = Env(fd, Ts, n_x, n_y, L, C, maxM, min_dis, max_dis, max_p,  max_b, p_n, power_num, args, TCclients, device)
     env.set_Ns(Ns)
@@ -184,7 +184,7 @@ def CDCtask(args):
     action_num = env.power_num
 
     for n in range(args.num_TGservers):
-        Agents_list.append(Agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=batch_size))
+        Agents_list.append(Agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=max_b))
         reward_lists_of_list.append([])
         mean_reward_lists_of_list.append([])
         critic_loss_list.append([])
@@ -200,7 +200,7 @@ def CDCtask(args):
         p = np.ones(args.num_TCclients)
         b = np.ones(args.num_TCclients)
         reward_hist = np.zeros((args.num_TCclients, args.num_TGservers))
-        R = batch * 28 * 28
+        R = bat * 28 * 28
         s_actor, _, g, loss, rate, reliability, delay1, delay2 = env.reset(device, R)
         delay = delay1 * 1e-2
         for num_TGserveragg in range(args.num_TGserver_update):

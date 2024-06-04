@@ -153,7 +153,7 @@ def initialize_model(args, device):
         if args.cuda:
             shared_layers = shared_layers.cuda(device)
             specific_layers = specific_layers.cuda(device)
-    elif args.global_model:
+    elif args.aggregated_model:
         if args.dataset == 'cifar10':
             if args.model == 'lenet':
                 shared_layers = lenet(args)
@@ -173,7 +173,7 @@ def initialize_model(args, device):
             raise ValueError('The dataset is not implemented for mtl yet')
         if args.cuda:
             shared_layers = shared_layers.cuda(device)
-    else: raise ValueError('Wrong input for the --mtl_model and --global_model, only one is valid')
+    else: raise ValueError('Wrong input for the --mtl_model and --aggregated_model, only one is valid')
     model = MTL_Model(shared_layers = shared_layers,
                       specific_layers = specific_layers,
                       learning_rate= args.lr,

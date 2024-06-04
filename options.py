@@ -174,7 +174,7 @@ def args_parser():
         type = int
     )
     parser.add_argument(
-        '--global_model',
+        '--aggregated_model',
         default=1,
         type=int
     )

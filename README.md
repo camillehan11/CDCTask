@@ -10,7 +10,7 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 
 ## The introduction of each file
 
-`main_1.py`: run this main file to simulate the methods for CDC resource management and concurrent task orchestration.
+`main.py`: run this file to simulate the methods for CDC resource management and concurrent task orchestration.
 
 
 ### Configurations

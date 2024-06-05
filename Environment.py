@@ -39,7 +39,7 @@ class Env():
         return power_set
 
     def get_batch_set(self, min_b):
-        batch_set = np.hstack([np.zeros((1), dtype=int),(np.linspace(min_b, 500, self.power_num-1))])
+        batch_set = np.hstack([np.zeros((1), dtype=int),(np.linspace(min_b, max_b, self.power_num-1))])
         return batch_set
 
     def set_Ns(self, Ns):

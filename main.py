@@ -15,6 +15,7 @@ from NNmodels.cifar_lenet import LeNet
 from NNmodels.mnist_logistic import LogisticRegression
 from NNmodels.mnist_lenet import mnistlenet
 from Environment import Env
+from TD3 import TD3_agent
 # Initialize seed for reproducibility
 random.seed(10)
 
@@ -122,7 +123,7 @@ def initialize_aggregated_nn(args):
             raise ValueError(f"Model {args.model} not implemented for MNIST")
     elif args.dataset == 'cifar10':
         if args.model == 'lenet':
-            aggregated_nn = lenet(args)
+            aggregated_nn = LeNet(args)
         else:
             raise ValueError(f"Model {args.model} not implemented for CIFAR-10")
     else:
@@ -184,7 +185,7 @@ def CDCtask(args):
     action_num = env.power_num
 
     for n in range(args.num_TGservers):
-        Agents_list.append(Agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=max_b))
+        Agents_list.append(TD3_agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=max_b))
         reward_lists_of_list.append([])
         mean_reward_lists_of_list.append([])
         critic_loss_list.append([])
@@ -196,9 +197,10 @@ def CDCtask(args):
 
     for num_comm in tqdm(range(args.num_round)):
         avg_acc = np.zeros(args.num_TGservers)
-        a = np.ones(args.num_TCclients).astype(np.int64)
-        p = np.ones(args.num_TCclients)
-        b = np.ones(args.num_TCclients)
+        num = int(args.num_TCclients/args.num_TGservers)
+        a = np.ones(args.num_TCclients,dtype=int)
+        p = np.ones((args.num_TGservers,num))
+        b = np.ones((args.num_TGservers,num),dtype=int)
         reward_hist = np.zeros((args.num_TCclients, args.num_TGservers))
         R = bat * 28 * 28
         s_actor, _, g, loss, rate, reliability, delay1, delay2 = env.reset(device, R)
@@ -218,7 +220,6 @@ def CDCtask(args):
                 rd = 4e+4 - i * 1e2
                 c = np.zeros(maxM)
                 s_actor_agent = s_actor_t[i * maxM:(i + 1) * maxM]
-                p_TCclients = [1 / args.num_TCclients for _ in range(maxM)]
                 tg = g[i * maxM: (i + 1) * maxM]
 
                 trate = rate[i * maxM: (i + 1) * maxM]
@@ -238,10 +239,12 @@ def CDCtask(args):
                 a_agent_2 = a_agent_1[:10]
                 selected_cids[i] = (a_agent_2 + i * maxM).tolist()
                 cids[i] = a_agent_2
-                p = np.squeeze(a_agent * (max_p / 2)) + (max_p / 2)
-                b = np.squeeze(a_agent * (max_b / 2)) + (max_b / 2)
+                p[i] = np.squeeze(a_agent_1* (max_p / 10))
+                b[i] = np.squeeze(a_agent_1  * (max_b / (2**(10))))
                 s_actor_t[a[i * maxM:(i + 1) * maxM]] = -1
-            s_actor_next, s_critic_next, reward_rate, sum_rate, rate, reliability, delay1, delay2, g, loss = env.step(p, b, device, R)
+            mp = p.reshape(-1)
+            mb = b.reshape(-1)
+            s_actor_next, s_critic_next, _, _, rate, reliability, delay1, delay2, g, loss = env.step(mp, mb, device, R)
             delay = delay1 * 1e-2
 
             for i in range(args.num_TGservers):

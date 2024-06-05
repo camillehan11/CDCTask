@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from Experience_replay import ReplayBuffer
 import torch as T
+import numpy as np
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Implementation of Twin Delayed Deep Deterministic Policy Gradients (TD3)
@@ -100,7 +101,9 @@ class TD3_agent(object):
 		mu = self.actor.forward(state).to(device)
 		self.actor.train()
 		a = mu.cpu().detach().numpy()[0]
-		return a
+		a = np.argsort(np.sum(-a, axis=1))
+		a_1 = a[:10]
+		return a, a_1
 
 	def store_transition(self, state, action, reward, state_):
 		self.memory.add(state, action, reward, state_)

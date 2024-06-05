@@ -215,9 +215,9 @@ def CDCtask(args):
             s_actor_t = s_actor.copy()
 
             for i, TGserver in enumerate(TGservers):
-                rr = 1e-6 - i * 1e-8
+                rr = 0.4 - i * 1e-4
                 rl = 0.9 - i * 0.02
-                rd = 4e+4 - i * 1e2
+                rd = 1.8e+3 - i * 1e2
                 c = np.zeros(maxM)
                 s_actor_agent = s_actor_t[i * maxM:(i + 1) * maxM]
                 tg = g[i * maxM: (i + 1) * maxM]

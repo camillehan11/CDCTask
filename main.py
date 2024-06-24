@@ -15,7 +15,6 @@ from NNmodels.cifar_lenet import LeNet
 from NNmodels.mnist_logistic import LogisticRegression
 from NNmodels.mnist_lenet import mnistlenet
 from Environment import Env
-from TD3 import TD3_agent
 # Initialize seed for reproducibility
 random.seed(10)
 
@@ -185,7 +184,7 @@ def CDCtask(args):
     action_num = env.power_num
 
     for n in range(args.num_TGservers):
-        Agents_list.append(TD3_agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=max_b))
+        Agents_list.append(agent(state_dim=state_num, action_dim=action_num, max_action=action_num, batch_size=max_b))
         reward_lists_of_list.append([])
         mean_reward_lists_of_list.append([])
         critic_loss_list.append([])

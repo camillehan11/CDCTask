@@ -10,7 +10,7 @@ from tqdm import tqdm
 from options import args_parser
 from TC_client import TCclient
 from TG_server import Server
-from datasets.get_data import get_dataloaders, show_distribution
+from datasets.get_data import get_dataloaders
 from NNmodels.cifar_lenet import LeNet
 from NNmodels.mnist_logistic import LogisticRegression
 from NNmodels.mnist_lenet import mnistlenet
@@ -27,12 +27,6 @@ def get_TCclient_class(args, TCclients):
     TCclient_class_dis = [[] for _ in range(10)]
     for TCclient in TCclients:
         train_loader = TCclient.train_loader
-        distribution = show_distribution(train_loader, args)
-        label = np.argmax(distribution)
-        TCclient_class.append(label)
-        TCclient_class_dis[label].append(TCclient.id)
-    print(TCclient_class_dis)
-    return TCclient_class_dis
 
 def get_TGserver_class(args, TGservers, TCclients):
     """Classify TG servers' data distribution."""
@@ -41,10 +35,6 @@ def get_TGserver_class(args, TGservers, TCclients):
         for cid in TGserver.cids:
             TCclient = TCclients[cid]
             train_loader = TCclient.train_loader
-            distribution = show_distribution(train_loader, args)
-            label = np.argmax(distribution)
-            TGserver_class[i].append(label)
-    print(f'Class distribution among TG servers: {TGserver_class}')
 
 def initialize_TGservers_iid(num_TGservers, TCclients, args, TCclient_class_dis):
     """Initialize TG servers with IID data distribution."""

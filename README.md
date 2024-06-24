@@ -16,7 +16,7 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 ### Configurations
 `options.py`: the configuration file of this work, and the parameters can be adjusted for testing other cases.
 
-### Server, and client settings
+### Server and client settings
 
 `TG_server.py`: the TG server simulator.
 

@@ -18,7 +18,7 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 
 ### Environment, server, and client settings
 
-`Environment.py`: the multicell cellular wireless environment simulator.
+`Environment.py`: the cellular wireless environment simulator.
 
 `TG_server.py`: the TG server simulator.
 

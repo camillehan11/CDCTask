@@ -192,8 +192,7 @@ def CDCtask(args):
         b = np.ones((args.num_TGservers,num),dtype=int)
         reward_hist = np.zeros((args.num_TCclients, args.num_TGservers))
         R = bat * 28 * 28
-        s_actor, _, g, loss, rate, reliability, delay1, delay2 = env.reset(device, R)
-        delay = delay1 * 1e-2
+        s_actor, _, g, loss, rate, reliability, delay = env.reset(device, R)
         for num_TGserveragg in range(args.num_TGserver_update):
             TGserver_sample = [0] * args.num_TGservers
             correct_all = 0.0

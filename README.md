@@ -30,7 +30,3 @@ The following versions have been tested: Python 3.7.16 + Pytorch 1.13.1+cu116. B
 
 `NNmodels`: distributed machine learning models for local training on clients.
 
-
-### Algorithms
-
-`TD3.py`, `DDPG.py`, and more state-of-the-art MARL algorithms will be added.
